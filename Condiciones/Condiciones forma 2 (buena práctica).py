@@ -17,14 +17,23 @@ def calcularMayor2(c,d):
         m=d
     return m
 
+def calcularMayor3(e,f):
+    if e>f:
+        m=e
+    else:
+        m=f
+    return m
+
 def main():
     a=int(input("Valor 1: "))
     b=int(input("Valor 2: "))
     c=int(input("Valor 3: "))
+    d=int(input("Valor 4: "))
 
     comparacion1=calcularMayor1(a,b)
     comparacion2=calcularMayor2(comparacion1,c)
+    comparacion3=calcularMayor3(comparacion2,d)
 
-    print("El mayor es:", comparacion2)
+    print("El mayor es:", comparacion3)
 
 main()
