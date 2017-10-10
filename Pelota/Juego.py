@@ -5,8 +5,8 @@
 import pygame
 
 # Dimensiones de la pantalla
-ANCHO = 800
-ALTO = 800
+ANCHO = 801
+ALTO = 801
 # Colores
 BLANCO = (255,255,255)  # R,G,B en el rango [0,255]
 NEGRO = (0,0,0)
