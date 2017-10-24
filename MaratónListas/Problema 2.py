@@ -7,6 +7,7 @@
 # Muestra cómo utilizar pygame para escribir programas que dibujan en la pantalla
 
 import pygame, math
+from random import randint
 
 # Dimensiones de la pantalla
 ANCHO = 800
@@ -23,17 +24,20 @@ def dibujarEjes(ventana):
     pygame.draw.line(ventana, VERDE, (0, ANCHO // 2), (ANCHO, ALTO // 2))
 
 
+def generarColor():
+    return (randint(0, 255), randint(0, 255), randint(0, 255))
+
+
 def dibujarFuncion(ventana):
-
-    for angulo in range(-720,720):
-        anguloRad=math.radians(angulo)
-        y=int(150*math.cos(anguloRad))
-        pygame.draw.circle(ventana,ROJO,(angulo+ANCHO//2,ALTO//2-y),2)
-
-    
-        if angulo%90 !=0:
-            y = int(150*math.tan(anguloRad))
-            pygame.draw.circle(ventana, BLANCO, (angulo + ANCHO // 2, ALTO // 2 - y), 2)
+    for angulo in range(0, 360):
+        anguloRad = math.radians(angulo)
+        radio = int(150 * math.cos(10 * anguloRad))
+        x = int(radio * math.cos(anguloRad))
+        y = int(radio * math.sin(anguloRad))
+        colorAzar = generarColor()
+        pygame.draw.circle(ventana, colorAzar, (ANCHO // 2 + x, ALTO // 2 - y), 2)
+        pygame.draw.circle(ventana, colorAzar, (ANCHO // 2 + 3 * x, ALTO // 2 - 3 * y), 2)
+        pygame.draw.circle(ventana, colorAzar, (ANCHO // 2 + 3 * x, ALTO // 2 - 3 * y), 2)
 
 
 def dibujar():
