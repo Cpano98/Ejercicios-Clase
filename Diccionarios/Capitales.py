@@ -96,7 +96,7 @@ def main():
     print("Ingrese: "
           "1 para comenzar a jugar."
 
-          " 2 para salir.")
+          " 2 o cualquier otro número para salir.")
 
     seleccion = int(input("Ingrese su selección:"))
 
