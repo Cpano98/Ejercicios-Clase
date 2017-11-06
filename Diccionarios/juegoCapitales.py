@@ -68,6 +68,7 @@ def main():
 
         while len(estados)>0:
             estado = jugarCapitales()
+
             esCorrecto=compararEstadoCapital(estado)
 
             if esCorrecto:
