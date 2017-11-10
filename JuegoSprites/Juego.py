@@ -56,9 +56,9 @@ def dibujar():
 
             # Mouse en los diferentes estados...
             elif evento.type == pygame.MOUSEBUTTONDOWN:  # El usuario hizo click
+                # Posición del mouse
+                xm,ym=pygame.mouse.get_pos()
                 if estado == "menu":
-                    # Posición del mouse
-                    xm, ym = pygame.mouse.get_pos()
                     # Posición del botón
                     xb, yb, anchoB, altoB = botonJugar.rect
                     if xm > xb and xm <= xb + anchoB:
@@ -71,8 +71,8 @@ def dibujar():
                     enemigo = pygame.sprite.Sprite()
                     enemigo.image = imgEnemigo
                     enemigo.rect = imgEnemigo.get_rect()
-                    enemigo.rect.left = xm
-                    enemigo.rect.top = xm
+                    enemigo.rect.left = xm-enemigo.rect.width//2
+                    enemigo.rect.top = ym-enemigo.rect.height//2
                     listaEnemigos.append(enemigo)
 
         # Borrar pantalla
