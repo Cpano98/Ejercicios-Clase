@@ -17,10 +17,20 @@ def dibujarMenu(ventana, botonJugar):
     ventana.blit(botonJugar.image, botonJugar.rect)
 
 
-def dibujarJuego(ventana, listaEnemigos):
+def dibujarJuego(ventana, listaEnemigos,listaBalas):
     for enemigo in listaEnemigos:
         ventana.blit(enemigo.image, enemigo.rect)
 
+    for bala in listaBalas:
+        ventana.blit(bala.image,bala.rect)
+
+def actualizarBalas(listaBalas,listaEnemigos):
+    for bala in listaBalas:
+        bala.rect.top -=15
+        for k in range (len(listaEnemigos)-1,-1,-1):
+            enemigo=listaEnemigos[k]
+            if bala.rect.colliderect(enemigo):
+                listaEnemigos.remove(enemigo)
 
 def dibujar():
     # Ejemplo del uso de pygame
@@ -44,9 +54,10 @@ def dibujar():
     # Enemigos
     listaEnemigos = []
     imgEnemigo = pygame.image.load("enemigo.png")
-    enemigo = pygame.sprite.Sprite()
-    enemigo.image = imgEnemigo
-    enemigo.rect = imgEnemigo.get_rect()
+
+    #Balas
+    listaBalas=[]
+    imgBala=pygame.image.load("bala.jpg")
 
     while not termina:
         # Procesa los eventos que recibe
@@ -75,6 +86,17 @@ def dibujar():
                     enemigo.rect.top = ym-enemigo.rect.height//2
                     listaEnemigos.append(enemigo)
 
+            elif evento.type==pygame.KEYDOWN:
+
+                if evento.key==pygame.K_SPACE:
+                    bala=pygame.sprite.Sprite()
+                    bala.image=imgBala
+                    bala.rect=imgBala.get_rect()
+                    bala.rect.left=ANCHO//2
+                    bala.rect.top=ALTO-bala.rect.height
+                    listaBalas.append(bala)
+
+
         # Borrar pantalla
         ventana.fill(BLANCO)
 
@@ -83,7 +105,8 @@ def dibujar():
             dibujarMenu(ventana, botonJugar)
 
         elif estado == "jugando":
-            dibujarJuego(ventana, listaEnemigos)
+            dibujarJuego(ventana, listaEnemigos,listaBalas)
+            actualizarBalas(listaBalas,listaEnemigos)
 
         pygame.display.flip()  # Actualiza trazos
         reloj.tick(40)  # 40 fps
