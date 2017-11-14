@@ -141,6 +141,10 @@ def dibujar():
         # Borrar pantalla
         ventana.fill(BLANCO)
 
+        fuente=pygame.font.SysFont("monospace",48)
+        texto=fuente.render("Hola!" +str(timer),1, VERDE_BANDERA)
+        ventana.blit(texto,(ANCHO//2 -100,ALTO//2))
+
         #Generar enemigos cada 2 segundos
         timer += 1/40
         if timer>=2:
