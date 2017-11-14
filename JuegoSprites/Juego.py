@@ -17,20 +17,34 @@ def dibujarMenu(ventana, botonJugar):
     ventana.blit(botonJugar.image, botonJugar.rect)
 
 
-def dibujarJuego(ventana, listaEnemigos,listaBalas):
+def dibujarJuego(ventana, listaEnemigos, listaBalas):
     for enemigo in listaEnemigos:
         ventana.blit(enemigo.image, enemigo.rect)
 
     for bala in listaBalas:
-        ventana.blit(bala.image,bala.rect)
+        ventana.blit(bala.image, bala.rect)
 
-def actualizarBalas(listaBalas,listaEnemigos):
+
+def actualizarBalas(listaBalas, listaEnemigos):
     for bala in listaBalas:
-        bala.rect.top -=15
-        for k in range (len(listaEnemigos)-1,-1,-1):
-            enemigo=listaEnemigos[k]
+        bala.rect.top -= 20
+        if bala.rect.top <= 0:
+            listaBalas.remove(bala)
+            continue    #Regresa al inicio del ciclo
+
+        borrarBala = False
+
+        for k in range(len(listaEnemigos) - 1, -1, -1):
+            enemigo = listaEnemigos[k]
+
             if bala.rect.colliderect(enemigo):
                 listaEnemigos.remove(enemigo)
+                borrarBala = True
+                break
+
+        if borrarBala:
+            listaBalas.remove(bala)
+
 
 def dibujar():
     # Ejemplo del uso de pygame
@@ -55,9 +69,9 @@ def dibujar():
     listaEnemigos = []
     imgEnemigo = pygame.image.load("enemigo.png")
 
-    #Balas
-    listaBalas=[]
-    imgBala=pygame.image.load("bala.jpg")
+    # Balas
+    listaBalas = []
+    imgBala = pygame.image.load("bala.jpg")
 
     while not termina:
         # Procesa los eventos que recibe
@@ -68,7 +82,7 @@ def dibujar():
             # Mouse en los diferentes estados...
             elif evento.type == pygame.MOUSEBUTTONDOWN:  # El usuario hizo click
                 # Posición del mouse
-                xm,ym=pygame.mouse.get_pos()
+                xm, ym = pygame.mouse.get_pos()
                 if estado == "menu":
                     # Posición del botón
                     xb, yb, anchoB, altoB = botonJugar.rect
@@ -82,20 +96,19 @@ def dibujar():
                     enemigo = pygame.sprite.Sprite()
                     enemigo.image = imgEnemigo
                     enemigo.rect = imgEnemigo.get_rect()
-                    enemigo.rect.left = xm-enemigo.rect.width//2
-                    enemigo.rect.top = ym-enemigo.rect.height//2
+                    enemigo.rect.left = xm - enemigo.rect.width // 2
+                    enemigo.rect.top = ym - enemigo.rect.height // 2
                     listaEnemigos.append(enemigo)
 
-            elif evento.type==pygame.KEYDOWN:
+            elif evento.type == pygame.KEYDOWN:
 
-                if evento.key==pygame.K_SPACE:
-                    bala=pygame.sprite.Sprite()
-                    bala.image=imgBala
-                    bala.rect=imgBala.get_rect()
-                    bala.rect.left=ANCHO//2
-                    bala.rect.top=ALTO-bala.rect.height
+                if evento.key == pygame.K_SPACE:
+                    bala = pygame.sprite.Sprite()
+                    bala.image = imgBala
+                    bala.rect = imgBala.get_rect()
+                    bala.rect.left = ANCHO // 2
+                    bala.rect.top = ALTO - bala.rect.height
                     listaBalas.append(bala)
-
 
         # Borrar pantalla
         ventana.fill(BLANCO)
@@ -105,8 +118,8 @@ def dibujar():
             dibujarMenu(ventana, botonJugar)
 
         elif estado == "jugando":
-            dibujarJuego(ventana, listaEnemigos,listaBalas)
-            actualizarBalas(listaBalas,listaEnemigos)
+            dibujarJuego(ventana, listaEnemigos, listaBalas)
+            actualizarBalas(listaBalas, listaEnemigos)
 
         pygame.display.flip()  # Actualiza trazos
         reloj.tick(40)  # 40 fps
