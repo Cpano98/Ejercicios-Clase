@@ -3,15 +3,12 @@ import requests
 url = "https://twitter.com/realDonaldTrump"
 info = requests.get(url)
 
-if info.status_code == 200:  # Lectura correcta
-    print(info.text)  # Procesa los datos
-
-listaLineas = info.text.split("/n")
+listaLineas = info.text.split("\n")
 
 indice = 0
 linea = listaLineas[indice]
 
-while """u-hiddenVisually">Seguidores""" not in linea:
+while 'u-hiddenVisually">Seguidores' not in linea:
     indice += 1
     linea = listaLineas[indice]
 
@@ -24,8 +21,10 @@ print(tokens)
 
 datos = tokens[2].split("=")
 seguidores = int(datos[1])
+print("")
+print("-----------------------")
 print("Seguidores:", seguidores)
 
 for linea in listaLineas:
     if "TweeTextSize" in linea:
-        print(linea)
+        print(linea[linea.index('">')+2:])
