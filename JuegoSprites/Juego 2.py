@@ -101,6 +101,13 @@ def dibujar():
 
     timer=0
 
+    #Musica de fondo
+    pygame.mixer.init()
+    pygame.mixer.music.load("musicaFondo.mp3")
+    pygame.mixer.music.play(-1)
+
+    efecto=pygame.mixer.Sound("Shoot.wav")
+
     while not termina:
         # Procesa los eventos que recibe
         for evento in pygame.event.get():
@@ -131,6 +138,7 @@ def dibujar():
             elif evento.type == pygame.KEYDOWN:
 
                 if evento.key == pygame.K_SPACE:
+                    efecto.play()
                     bala = pygame.sprite.Sprite()
                     bala.image = imgBala
                     bala.rect = imgBala.get_rect()
