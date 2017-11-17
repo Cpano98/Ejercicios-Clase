@@ -25,3 +25,7 @@ print(tokens)
 datos = tokens[2].split("=")
 seguidores = int(datos[1])
 print("Seguidores:", seguidores)
+
+for linea in listaLineas:
+    if "TweeTextSize" in linea:
+        print(linea)
